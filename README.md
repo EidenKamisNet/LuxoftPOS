@@ -1,5 +1,5 @@
-#CashMaster  Challenge
-
+CashMaster  Challenge
+=======================
 You are a software consultant for CASH Masters, a company that sells point-of-sale (POS) electronic cash registers.  CASH Masters would like to rewrite their POS system from scratch and has the requirement below that they’d like you to implement. Provide a complete working solution of how you would implement this. Pay attention to all function and non-function requirements and treat this as if you were coding as a member of the CASH Master team.
 
 Functional Requirements
@@ -16,7 +16,7 @@ Note: the customer may not submit an optimal number of bills and coins. For exam
 
 Since other engineers will be using your new function, recommend an appropriate data structure for the bills and coins. This structure should be used for the input parameter and for the returned value.  Additionally, this system will be sold around the world.  Each country will have its own denomination of bills and coins. For example, here are denomination lists for two countries where our POS might be sold:
 
-•	US: 0.01, 0.05, 0.10, 0.25, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00
+•	US: 0.01, 0.05, 0.10, 0.25, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00<br/>
 •	Mexico: 0.05, 0.10, 0.20, 0.50, 1.00, 2.00, 5.00, 10.00, 20.00, 50.00, 100.00
 
 You are not required to physically distinguish whether the values are bills or coins, only their numeric values.
@@ -25,11 +25,11 @@ When a POS terminal is sold and installed in a given country, its currency setti
     
 Non-Functional Requirements
 ===========================
-•	Write a C# .NET console app that demonstrates your working routine
-•	Provide comments to help future engineers use, and extend your function
-•	Unit tests should provide complete coverage of all key aspects of your function
-•	Common Objective Oriented principles should be applied
-•	Your routine should perform as fast as possible
-•	You need to have robust error handling with clearly documented exception definitions for callers of your routine
+•	Write a C# .NET console app that demonstrates your working routine<br/> 
+•	Provide comments to help future engineers use, and extend your function<br/>
+•	Unit tests should provide complete coverage of all key aspects of your function<br/>
+•	Common Objective Oriented principles should be applied<br/>
+•	Your routine should perform as fast as possible<br/>
+•	You need to have robust error handling with clearly documented exception definitions for callers of your routine<br/>
 
  
