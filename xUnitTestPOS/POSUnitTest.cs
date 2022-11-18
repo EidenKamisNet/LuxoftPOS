@@ -14,14 +14,11 @@ namespace xUnitTestPOS
    
     public class POSUnitTest
     {
-        Mock<EFCashMastersDbContext> MockEFCashMastersDbContext = new Mock<EFCashMastersDbContext>();
-        Mock<IDBContext> IDBContext;
-        
-        IList<POS> LstPOS= new List<POS>();
+
         EFCashMastersDbContext context;
         public POSUnitTest() {
 
-            MockEFCashMastersDbContext = new Mock<EFCashMastersDbContext>();
+            //MockEFCashMastersDbContext = new Mock<EFCashMastersDbContext>();
             // userContextMock.Setup(x => x.POS).ReturnsDbSet(LstPOS);
             var options = new DbContextOptionsBuilder<EFCashMastersDbContext>()
            .UseInMemoryDatabase(databaseName: "CashMastersTest")
@@ -73,7 +70,7 @@ namespace xUnitTestPOS
             Assert.True(parityMXN.Id > 0 && parityMXN.POSId > 0);
             Parity parityUSD = new Parity(pos)
             {
-                Currency = CurrencyUSD,//new CurrencyType(pos) { CurrencyName = "USD", IsBaseCurrency = false },//CurrencyUSD,
+                Currency = CurrencyUSD,
                 ParityDate = DateTime.UtcNow,
                 Value = 19.39
             };
@@ -99,21 +96,21 @@ namespace xUnitTestPOS
             pos.SetExchangeTypes(MXNExchages, CurrencyMXN);
             Assert.True(pos.GetPOSExchangeTypes(x => x.Country == country) != null);
             ShoppingCart shoppingCart = new ShoppingCart(pos);
-            //var result = pos.GetDbContext().Products.FirstOrDefaultAsync(x => x.Name == "HeadSet Vx248").Result;
+           
             Assert.NotNull(product);
             shoppingCart.AddProductToCart(product, 2);
             shoppingCart.Commit();
             Assert.True(shoppingCart.Id > 0 && shoppingCart.POSId > 0 && shoppingCart.ShoppingCartDetails.Count > 0);
             var currenttotal = shoppingCart.GetCurrentTotal();
             HashSet<PaymentCurrencyDenominations> paymentCurrencyDenominations = new HashSet<PaymentCurrencyDenominations>();
-            //PAYMENT WITH EXCHANGE TYPE 1
+   
             var POSExchange = pos.GetPOSExchangeType(x => x.Currency == CurrencyMXN && x.Value == 100.00);
             PaymentCurrencyDenominations PaymentForHeadset1 = new PaymentCurrencyDenominations(pos)
             { PaymentType = PaymentType.Payment, ExchangeType = POSExchange, Quantity = 3 };
             paymentCurrencyDenominations.Add(PaymentForHeadset1);            
-            //1 full payment per Shopping Cart
+
             shoppingCart.AddPayment(CurrencyMXN, currenttotal, paymentCurrencyDenominations);
-            //get exchange estructure
+
             Assert.True(shoppingCart.GetPayment().GetPaybackCurrencyDenominations().Count>0);
             Assert.True(shoppingCart.GetPayment().GetTotalPayback()>0);
             Assert.True(shoppingCart.GetPayment().GetBaseCurrencyTotalPayed()>0);
