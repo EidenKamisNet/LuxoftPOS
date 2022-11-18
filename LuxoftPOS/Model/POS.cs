@@ -12,7 +12,7 @@ namespace LuxoftPOS.Model
 {
     public class POS:ICommit,IDBContext
     {
-        private EFCashMastersDbContext dbcontext = new EFCashMastersDbContext();
+        private EFCashMastersDbContext dbcontext;
         [Key]
         public int Id { get; set; }
         public string POSName { get; set; }
@@ -20,7 +20,8 @@ namespace LuxoftPOS.Model
         private CountryOption Country { get; set; }
         private CurrencyType POSBaseCurrency;
         public POS() { }
-        public POS(CountryOption country) {
+        public POS(CountryOption country, EFCashMastersDbContext dbcontext) {
+            this.dbcontext = dbcontext;
             Country = country;
             POSName = Country.ToString();
             DefaultLookup(x =>  x.POSName== POSName);

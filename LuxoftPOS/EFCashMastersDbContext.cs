@@ -31,11 +31,11 @@ namespace LuxoftPOS
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentCurrencyDenominations> PaymentCurrencyDenominations{ get; set; }
         public EFCashMastersDbContext() { }
-
+        public EFCashMastersDbContext(DbContextOptions<EFCashMastersDbContext> options):base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
 
+            modelBuilder.Entity<Parity>().Property(p => p.ParityDate).IsRequired();
             modelBuilder.Entity<Product>().Property(p => p.Name).HasMaxLength(30).IsRequired();
             modelBuilder.Entity<Stock>().Property(p=>p.InStock).HasPrecision(precision:4);
             modelBuilder.Entity<CurrencyType>().Property(p => p.CurrencyName).HasMaxLength(10);
@@ -48,6 +48,7 @@ namespace LuxoftPOS
             optionsBuilder.EnableSensitiveDataLogging();
             
            // var x = ConfigurationManager.AppSettings["DBConnection"];
+           if(!optionsBuilder.IsConfigured)
             optionsBuilder.UseSqlServer(@"Data Source=EIDENKAMIS-PC\SQLEXPRESS2019;Initial catalog=CashMasters;Integrated Security=true");
             //"Data Source=EIDENKAMIS-PC;Initial catalog=CashMasters;Integrated Security=true"
             //Server =EIDENKAMIS-PC\SQLEXPRESS2019;Database=CashMasters;User Id=sa;Password=EidenKamis18235;

@@ -17,7 +17,7 @@ namespace LuxoftPOS
             try
             {
                 WriteLine($"//////////////////////SET POS CONFIGURATION////////////////////////////////");
-                IDBContext pos = new POS(Model.CashOptions.CountryOption.Mexico).CreateNewPOS();
+                IDBContext pos = new POS(Model.CashOptions.CountryOption.Mexico,new EFCashMastersDbContext()).CreateNewPOS();
                 //IDBContext pos = new POS(Model.CashOptions.CountryOption.Mexico);
                 WriteLine($"POS Id: {((POS)pos).Id.ToString()}  |  POS Country: {pos.GetCountry()}");
                 //Configure Currencies handle by the current POS
@@ -28,14 +28,14 @@ namespace LuxoftPOS
                 WriteLine($"CurrencyName:{CurrencyMXN.CurrencyName}  |  Country:{CurrencyMXN.Country}  |  IsBaseCurrency: {CurrencyMXN.IsBaseCurrency}");
                 var CurrencyUSD = new CurrencyType(pos) { CurrencyName = "USD", IsBaseCurrency = false };
                 CurrencyUSD.Commit();
-                WriteLine($"CurrencyNaame:{CurrencyUSD.CurrencyName}  |  Country:{CurrencyUSD.Country}  |  IsBaseCurrency: {CurrencyUSD.IsBaseCurrency}");
+                WriteLine($"CurrencyName:{CurrencyUSD.CurrencyName}  |  Country:{CurrencyUSD.Country}  |  IsBaseCurrency: {CurrencyUSD.IsBaseCurrency}");
                 //Configure Parities for the current POS
 
                 WriteLine("\r\n================================Configure  Parities================================");
                 Parity parityMXN = new Parity(pos)
                 {
                     Currency = CurrencyMXN,//new CurrencyType(pos) { CurrencyName = "MXN", IsBaseCurrency = true },CurrencyMXN, 
-                    ParityDate = DateTime.Now,
+                    ParityDate = DateTime.UtcNow,
                     Value = 1
                 }; //the value of 1 peso in MXN Currency for a POS from mexico it will be 1 MXN
                 WriteLine($"Currency:{parityMXN.Currency.CurrencyName}  |  Value:{parityMXN.Value.ToString()}");
@@ -43,19 +43,19 @@ namespace LuxoftPOS
                 Parity parityUSD = new Parity(pos)
                 {
                     Currency = CurrencyUSD,//new CurrencyType(pos) { CurrencyName = "USD", IsBaseCurrency = false },//CurrencyUSD,
-                    ParityDate = DateTime.Now,
+                    ParityDate = DateTime.UtcNow,
                     Value = 19.39
                 }; //the value of 1 USD in MXN Currency for a POS from mexico it will be 19.39 MXN
                 WriteLine($"Currency:{parityUSD.Currency.CurrencyName}  |  Value:{parityUSD.Value.ToString()}");
                 parityUSD.Commit();
                 WriteLine("\r\n=================Parity Apraisal of  the day between MXN and USD==================");
                 //Configure Parity Apraisal of the day between MXN and USD in case we need to do a convertion for payments that are done in other than the current POS Currency
-                ParityApraisal parityApraisal = new ParityApraisal(pos) { ApraisalDate = DateTime.Now, BaseParity = parityMXN, ConvertionParity = parityUSD };
+                ParityApraisal parityApraisal = new ParityApraisal(pos) { ApraisalDate = DateTime.UtcNow, BaseParity = parityMXN, ConvertionParity = parityUSD };
 
                 parityApraisal.Commit();
                 WriteLine($"BaseParity:{parityApraisal.BaseParity.Value} {parityApraisal.BaseParity.Currency.CurrencyName}  |  ConvertionParity:{parityApraisal.ConvertionParity.Value} {parityApraisal.ConvertionParity.Currency.CurrencyName}");
 
-                ParityApraisal parityApraisalDefault = new ParityApraisal(pos) { ApraisalDate = DateTime.Now, BaseParity = parityMXN, ConvertionParity = parityMXN };
+                ParityApraisal parityApraisalDefault = new ParityApraisal(pos) { ApraisalDate = DateTime.UtcNow, BaseParity = parityMXN, ConvertionParity = parityMXN };
 
                 parityApraisalDefault.Commit();
                 WriteLine($"BaseParity:{parityApraisalDefault.BaseParity.Value} {parityApraisalDefault.BaseParity.Currency.CurrencyName}  |  ConvertionParity:{parityApraisalDefault.ConvertionParity.Value} {parityApraisalDefault.ConvertionParity.Currency.CurrencyName}");
@@ -70,7 +70,7 @@ namespace LuxoftPOS
                     ProductDate = DateTime.Today,
                     Country = pos.GetCountry()
                 };
-                product.AddNewPrice(120, DateTime.Now);
+                product.AddNewPrice(120, DateTime.UtcNow);
                 product.AddStocks(5);
                 product.Commit();
                 Product product2 = new Product(pos)
@@ -80,7 +80,7 @@ namespace LuxoftPOS
                     ProductDate = DateTime.Today,
                     Country = pos.GetCountry()
                 };
-                product2.AddNewPrice(87, DateTime.Now);
+                product2.AddNewPrice(87, DateTime.UtcNow);
                 product2.AddStocks(10);
                 product2.Commit();
                 WriteLine($"ProductName:{product.Name} ");
