@@ -2,7 +2,7 @@
 
 namespace LuxoftPOS.Migrations
 {
-    public partial class Test2 : Migration
+    public partial class Test3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
