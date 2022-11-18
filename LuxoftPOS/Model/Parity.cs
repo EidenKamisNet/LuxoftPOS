@@ -69,5 +69,7 @@ namespace LuxoftPOS.Model
         {
             return new Parity(dbcontext, Id, Country, Currency, Value, ParityDate); 
         }
+
+
     }
 }

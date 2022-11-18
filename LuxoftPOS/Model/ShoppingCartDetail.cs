@@ -16,7 +16,7 @@ namespace LuxoftPOS.Model
         public ShoppingCartDetail(IDBContext dbcontext) {
             this.dbcontext = dbcontext;
             this.POSId = ((POS)dbcontext).Id;
-            this.ShoppingCartDetailDate = DateTime.Now;
+            this.ShoppingCartDetailDate = DateTime.UtcNow;
             this.Country = dbcontext.GetCountry();
         }
         public ShoppingCartDetail(IDBContext dbcontext, int id, int pOSId, CountryOption country, DateTime shoppingCartDetailDate, Product product, int quantity) : this(dbcontext)

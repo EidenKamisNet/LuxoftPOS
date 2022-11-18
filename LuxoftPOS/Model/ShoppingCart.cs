@@ -15,7 +15,7 @@ namespace LuxoftPOS.Model
         {
             this.dbcontext = dbcontext;
             this.POSId = ((POS)dbcontext).Id;
-            this.ShoppingCartDate = DateTime.Now;
+            this.ShoppingCartDate = DateTime.UtcNow;
         }
         public ShoppingCart(IDBContext dbcontext, int id, int pOSId, DateTime shoppingCartDate, int totalProducts, HashSet<ShoppingCartDetail> shoppingCartDetails, HashSet<Product> products, Payment payment) : this(dbcontext)
         {
