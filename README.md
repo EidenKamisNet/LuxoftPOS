@@ -1,3 +1,31 @@
+Logic and things to consider at running
+=======================
+the project was build in .Net Core 6 and it also includes Entity Framework 6 Structures in order to have a database to handle a basic POS Configuration and a ShoppingCart session,therefore the use of a database in SQL is required and is handle in the class EFCashMasterDbContext.cs ,some migrations files were modified manually in order to have foreing keys as needed and the use of FirstCode tools as the package Manager Console is precise to run the following instruction :
+```ruby
+update-database
+```
+the POS it consist in the following Areas:
+| Class | Description |
+| --- | --- |
+| POS | you can create a pos by Country in here with the method CreateNewPOS if you want to use an existing one just using the constructor would be enough,something to consider is than the POS was build thinking in handle BaseCurrency depending of the country but that doesn't mean you can not pay with a foreing currency,you can do it but the exchange will be payback in the BaseCurrency of the POS |
+| CurrencyType | is a catalog of the currencies that a POS is able to Handle for paybacks calculations |
+| Parity | catalog of the Raw  value of foreing currencies based in the BaseCurrency of the POS |
+| ParityApraisal | configuration to let us know how should we do the convertion from a foreing Currency to the BaseCurrency of the POS |
+| Product | Products Catalog Segmented by POS Location |
+| Price | Catalog of Prices by date for every product |
+| Stock | Configuration of Acountabily of Entries and Exits of a product |
+| ExchangeType | Catalog of exchangeTypes per Denomination(Identify Bills and Coins) |
+| ShoppingCart | it saves the general Statistics of the sale until is Closed / Commited |
+| ShoppingCartDetail | it saves the relation between shopping cart and the Quantity Ordered by a Product |
+| Payment | A record of payment for the full sale |
+| PaymentCurrencyDenominations | it saves a list of the ExchangeType denominations that the client use in order to pay and it also saves the denominations that are going to be payback to a client for the sale |
+
+something to know is that the Main Function in Program.cs has configure a Base structure of how every element should be use 
+the UnitTesting was build on XUnit and it Use a Memory enviroment to emulate the database and the behaviour of Entity Framework
+
+
+
+
 CashMaster  Challenge
 =======================
 You are a software consultant for CASH Masters, a company that sells point-of-sale (POS) electronic cash registers.  CASH Masters would like to rewrite their POS system from scratch and has the requirement below that they’d like you to implement. Provide a complete working solution of how you would implement this. Pay attention to all function and non-function requirements and treat this as if you were coding as a member of the CASH Master team.
