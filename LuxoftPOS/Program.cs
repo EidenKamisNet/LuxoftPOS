@@ -17,7 +17,8 @@ namespace LuxoftPOS
             try
             {
                 WriteLine($"//////////////////////SET POS CONFIGURATION////////////////////////////////");
-                IDBContext pos = new POS(Model.CashOptions.CountryOption.Mexico,new EFCashMastersDbContext()).CreateNewPOS();
+            
+                IDBContext pos = new POS(Model.CashOptions.CountryOption.Mexico, new EFCashMastersDbContext()).CreateNewPOS();
                 //IDBContext pos = new POS(Model.CashOptions.CountryOption.Mexico);
                 WriteLine($"POS Id: {((POS)pos).Id.ToString()}  |  POS Country: {pos.GetCountry()}");
                 //Configure Currencies handle by the current POS

@@ -1,19 +1,15 @@
 ﻿using LuxoftPOS.Model;
 using LuxoftPOS.Model.CashOptions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-using System.Configuration;
-using System.Collections.Specialized;
-using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using System;
+
+using Microsoft.Extensions.Configuration;
+
 
 namespace LuxoftPOS
 {
+
     public class EFCashMastersDbContext : DbContext
     {
 
@@ -46,10 +42,17 @@ namespace LuxoftPOS
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
-            
-           // var x = ConfigurationManager.AppSettings["DBConnection"];
-           if(!optionsBuilder.IsConfigured)
-            optionsBuilder.UseSqlServer(@"Data Source=EIDENKAMIS-PC\SQLEXPRESS2019;Initial catalog=CashMasters;Integrated Security=true");
+           
+            var configuration = new ConfigurationBuilder()
+                      .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                      .AddXmlFile("App.config")
+                      .Build();
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer(configuration.GetValue<string>("connectionStrings:add:CashMasters_dbConnection:connectionString"));
+
+            // optionsBuilder.UseSqlServer(x.GetConnectionString("Default"));
+            //if(!optionsBuilder.IsConfigured)
+            //   optionsBuilder.UseSqlServer(@"Data Source=EIDENKAMIS-PC\SQLEXPRESS2019;Initial catalog=Prueba3;Integrated Security=true");
             //"Data Source=EIDENKAMIS-PC;Initial catalog=CashMasters;Integrated Security=true"
             //Server =EIDENKAMIS-PC\SQLEXPRESS2019;Database=CashMasters;User Id=sa;Password=EidenKamis18235;
             base.OnConfiguring(optionsBuilder);
