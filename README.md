@@ -1,10 +1,11 @@
 Logic and things to consider at running
 =======================
 https://learn.microsoft.com/en-us/answers/questions/1287896/getting-an-error-add-migration-the-term-add-migrat
+
 the project was build in .Net Core 6 and it also includes Entity Framework 6 Structures in order to have a database to handle a basic POS Configuration and a ShoppingCart session,therefore the use of a database in SQL is required and is handle in the class EFCashMasterDbContext.cs ,some migrations files were modified manually in order to have foreing keys as needed and the use of FirstCode tools as the package Manager Console is precise to run the following instruction :
 ```ruby
-//this code must run on PACKAGE MANAGER CONSOLE
-//TOOLS->NUGET PACKAGE MANAGER-> PACKAGE MANAGER CONSOLE
+#this code must run on PACKAGE MANAGER CONSOLE
+#TOOLS->NUGET PACKAGE MANAGER-> PACKAGE MANAGER CONSOLE
 update-database
 ```
 the POS it consist in the following Areas:
